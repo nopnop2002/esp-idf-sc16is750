@@ -1,5 +1,5 @@
 # selftest
-Operation check only with Breakout board.   
+Loop back test only with Breakout board.   
 
 This project has the following patterns:
 
