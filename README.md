@@ -47,7 +47,7 @@ __The maximum transfer speed of SC16IS752 is 1843200/16 = 115,200bps.__
 ![SC16IS752-1](https://user-images.githubusercontent.com/6020549/71384120-e327c780-2622-11ea-8b85-b35da2f9deaa.JPG)
 
 __There is a bug at the PCB routing:__   
-__On all boards, the SC16IS752 IRQ pin and the board's IRQ connector are directly connected.
+__On all boards, the SC16IS752 IRQ pin and the board's IRQ connector are directly connected.__    
 __It has a pull-up register, but it doesn't work.__   
 __Therefore, when using IRQ, an external pull-up resistor is required.__   
 
