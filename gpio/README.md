@@ -30,7 +30,7 @@ ESP32                     Breakout
                          |       +---------------+
                          |       |SC16IS752      |
                          |       |               |
-GND---220Ohm---LED------GPIO0----GPIO0            |
+GND---220Ohm---LED-----GPIO0----GPIO0            |
                          |       |               |
                          |       |               |
                          |       |               |
