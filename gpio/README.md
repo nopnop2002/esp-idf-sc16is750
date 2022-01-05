@@ -1,4 +1,6 @@
 # gpio
+GPIO INPUT/OUTPUT.   
+
 This project has the following patterns:
 
 |# of UART|Interface|Direction|
