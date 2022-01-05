@@ -143,6 +143,8 @@ All pins are 5V tolerant.
 |GND|5V|0x4C|
 |GND|GND|0x4D|
 
+(*3)No Requires PullUp   
+
 # Wireing for SPI
 
 |SC16IS750/752||ESP32|
