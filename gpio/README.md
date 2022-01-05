@@ -3,20 +3,14 @@ This project has the following patterns:
 
 |# of UART|Interface|Direction|
 |:-:|:-:|:-:|
-|Single|IC2|OUTPUT|
-|Single|IC2|INPUT using polling|
-|Single|IC2|INPUT using interrupt|
-|Single|SPI|OUTPUT|
-|Single|SPI|INPUT using polling|
-|Single|SPI|INPUT using interrupt|
-|Dual|IC2|OUTPUT|
-|Dual|IC2|INPUT using polling|
-|Dual|IC2|INPUT using interrupt|
-|Dual|SPI|OUTPUT|
-|Dual|SPI|INPUT using polling|
-|Dual|SPI|INPUT using interrupt|
+|--|IC2|OUTPUT|
+|--|IC2|INPUT using polling|
+|--|IC2|INPUT using interrupt|
+|--|SPI|OUTPUT|
+|--|SPI|INPUT using polling|
+|--|SPI|INPUT using interrupt|
 
-__It doesn't matter whether it's Single or Dualha in GPIO operation.__   
+__It doesn't matter whether it's Single or Dual in GPIO operation.__   
 
 
 # Configuration   
