@@ -23,6 +23,27 @@ __It doesn't matter whether it's Single or Dual in GPIO operation.__
 
 # Wireing for OUTPUT  
 Connect GPIO0 and LED.   
+```
+ESP32                     Breakout
+                         +------------------------
+                         |
+                         |       +---------------+
+                         |       |SC16IS752      |
+                         |       |               |
+GND---220Ohm---LED------GPIO0----GPIO0            |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       |               |
+                         |       +---------------+
+                         |
+                         +-----------------------
+```
 
 # Wireing for INPUT using polling   
 ```
@@ -43,7 +64,7 @@ GND------------+         |       |               |
                          |       |               |
                          |       |               |
                          |       +---------------+
-                         ||
+                         |
                          +-----------------------
 ```
 
