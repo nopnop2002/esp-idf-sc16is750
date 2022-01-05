@@ -1,4 +1,6 @@
 # selftest
+Operation check only with Breakout board.
+
 This project has the following patterns:
 
 |# of UART|Interface|
