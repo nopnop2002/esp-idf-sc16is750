@@ -135,7 +135,8 @@ The SC16IS752 breakout board is equipped with a AMS1117-3.3 voltage regulator, w
 Therefore, the level of i2c is 3.3V.   
 All pins are 5V tolerant.   
 
-(*2)i2c address selection   
+(*2)
+i2c address selection.   
 |A0|A1|Address|
 |:-:|:-:|:-:|
 |5V|5V|0x48|
@@ -143,7 +144,9 @@ All pins are 5V tolerant.
 |GND|5V|0x4C|
 |GND|GND|0x4D|
 
-(*3)No Requires PullUp   
+(*3)
+No Requires PullUp.   
+You can change any pin using menuconfig.   
 
 # Wireing for SPI
 
@@ -152,12 +155,12 @@ All pins are 5V tolerant.
 |VCC|--|5V(*1)|
 |GND|--|GND|
 |RESET|--|N/C|
-|A0/CS|--|CS|
-|A1/SI|--|MOSI|
-|NC/SO|--|MISO|
+|A0/CS|--|CS(*2)|
+|A1/SI|--|MOSI(*2)|
+|NC/SO|--|MISO(*2)|
 |IRQ|--|N/C|
 |I2C/SPI|--|GND|
-|SCL/SCLK|--|SCK|
+|SCL/SCLK|--|SCK(*2)|
 |SDA/VSS|--|GND|
 
 (*1)
@@ -165,6 +168,9 @@ The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, 
 The SC16IS752 breakout board is equipped with a AMS1117-3.3 voltage regulator, which provides 3.3V to the chip.   
 Therefore, the level of SPI is 3.3V.   
 All pins are 5V tolerant.   
+
+(*2)
+You can change any pin using menuconfig.   
 
 # Troubleshooting
 Such an error may occur.   
