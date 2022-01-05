@@ -1,5 +1,5 @@
 # receiver
-Receive operation from UART.   
+Receive data from UART.   
 There is no transmission.   
 
 This project has the following patterns:
