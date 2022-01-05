@@ -112,3 +112,9 @@ For some reason GPIO06, GPIO08, GPIO09, GPIO19 cannot be used for SPI clock pins
 I looked at the ESP32-C3 datasheet, but I don't understand why.   
 This may be a problem only for my board.   
 
+# Troubleshooting
+Such an error may occur.   
+If you change to a shorter wire, it will be fixed.   
+![communication_error](https://user-images.githubusercontent.com/6020549/148180652-b1456e0c-516a-4edc-a815-024121ff1b7f.jpg)
+![WriteRegister_i2c](https://user-images.githubusercontent.com/6020549/148180657-2440265a-b71b-45cb-b71e-1c3053cc05d5.jpg)
+
