@@ -1,6 +1,6 @@
 # echo
 Converts the entered characters from uppercase to lowercase and from lowercase to uppercase and sends them back.   
-```abcdEFGH-->ABCDefgh```   
+```Hello World-->hELLO wORLD```   
 
 This project has the following patterns:
 
@@ -62,6 +62,6 @@ void loop() {
 }
 ```
 
-# Screen Shot of other side
+# Screen Shot of other side   
 ![echo-1](https://user-images.githubusercontent.com/6020549/148184319-b511832c-7c7f-409c-ae7e-210a7f82d979.jpg)
 
