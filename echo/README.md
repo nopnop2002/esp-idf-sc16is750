@@ -28,3 +28,36 @@ Connect TX of ChannelA and other computer RX at any baud rate.
 Connect RX of ChannelB and other computer TX at any baud rate.   
 Connect TX of ChannelB and other computer RX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
+
+# Sketch of the other side   
+I used UNO.   
+```
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(10, 11); // RX, TX
+
+#define baudrate 9600L
+
+long lastMsg = 0;
+
+void setup() {
+  Serial.begin(115200);
+  mySerial.begin(baudrate);
+}
+
+void loop() {
+  long now = millis();
+  if (now - lastMsg > 1000) {
+    lastMsg = now;
+    char buf[64];
+    sprintf(buf,"Hello Wold %ld, Baudrate is %ld", millis(), baudrate);
+    mySerial.println(buf);
+  }
+
+  if (mySerial.available() > 0) {
+    int data = mySerial.read();
+    Serial.write(data);
+    //Serial.println(data, HEX);
+  }  
+
+}
+```
