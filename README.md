@@ -113,6 +113,57 @@ For some reason GPIO06, GPIO08, GPIO09, GPIO19 cannot be used for SPI clock pins
 I looked at the ESP32-C3 datasheet, but I don't understand why.   
 This may be a problem only for my board.   
 
+
+# Wireing for i2c
+
+|SC16IS750/752||ESP32|
+|:-:|:-:|:-:|
+|VCC|--|5V(*1)|
+|GND|--|GND|
+|RESET|--|N/C|
+|A0/CS|--|5V(*2)|
+|A1/SI|--|5V(*2)||
+|NC/SO|--|N/C|
+|IRQ|--|N/C|
+|I2C/SPI|--|5V|
+|SCL/SCLK|--|SCL(*3)|
+|SDA/VSS|--|SDA(*3)|
+
+(*1)
+The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, which provides 3.3V to the chip.   
+The SC16IS752 breakout board is equipped with a AMS1117-3.3 voltage regulator, which provides 3.3V to the chip.   
+Therefore, the level of i2c is 3.3V.   
+All pins are 5V tolerant.   
+
+(*2)i2c address selection   
+|A0|A1|Address|
+|:-:|:-:|:-:|
+|5V|5V|0x48|
+|5V|GND|0x49|
+|GND|5V|0x4C|
+|GND|GND|0x4D|
+
+# Wireing for SPI
+
+|SC16IS750/752||ESP32|
+|:-:|:-:|:-:|
+|VCC|--|5V(*1)|
+|GND|--|GND|
+|RESET|--|N/C|
+|A0/CS|--|CS|
+|A1/SI|--|MOSI|
+|NC/SO|--|MISO|
+|IRQ|--|N/C|
+|I2C/SPI|--|GND|
+|SCL/SCLK|--|SCK|
+|SDA/VSS|--|GND|
+
+(*1)
+The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, which provides 3.3V to the chip.   
+The SC16IS752 breakout board is equipped with a AMS1117-3.3 voltage regulator, which provides 3.3V to the chip.   
+Therefore, the level of SPI is 3.3V.   
+All pins are 5V tolerant.   
+
 # Troubleshooting
 Such an error may occur.   
 If you change to a shorter wire, it will be fixed.   
