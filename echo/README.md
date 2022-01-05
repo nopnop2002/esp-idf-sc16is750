@@ -49,7 +49,7 @@ void loop() {
   if (now - lastMsg > 1000) {
     lastMsg = now;
     char buf[64];
-    sprintf(buf,"Hello Wold %ld, Baudrate is %ld", millis(), baudrate);
+    sprintf(buf,"Hello World %ld, Baudrate is %ld", millis(), baudrate);
     mySerial.println(buf);
   }
 
@@ -63,5 +63,5 @@ void loop() {
 ```
 
 # Screen Shot of other side   
-![echo-1](https://user-images.githubusercontent.com/6020549/148184319-b511832c-7c7f-409c-ae7e-210a7f82d979.jpg)
+![echo-1](https://user-images.githubusercontent.com/6020549/148186633-5778c802-a75c-453a-9974-1e78f87ab1dc.jpg)
 
