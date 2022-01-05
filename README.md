@@ -1,5 +1,5 @@
 # esp-idf-sc16is750
-sc16is750/750 driver for esp-idf.
+sc16is750/752 driver for esp-idf.
 
 ## SC16IS750 Breakout
 SC16IS750 has a single channel UART and eight GPIOs.   
@@ -99,6 +99,7 @@ idf.py flash
 ```
 
 # Installation for ESP32-C3
+```
 git clone https://github.com/nopnop2002/esp-idf-sc16is750
 cd esp-idf-sc16is750/selftest
 idf.py set-target esp32c3

@@ -1,31 +1,12 @@
 # selftest
 This project has the following patterns:
 
-<table>
-<thead>
-<tr>
-<td># of UART</td>
-<td>INTERFACE</td>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Single Channel</td>
-<td>i2c</td>
-</tr>
-<tr>
-<td>Single Channel</td>
-<td>SPI</td>
-</tr>
-<tr>
-<td>Dual Channel</td>
-<td>i2c</td>
-</tr>
-<tr>
-<td>Dual Channel</td>
-<td>SPI</td>
-</tr>
-</tbody>
+|# of UART|Interface|
+|:-:|:-:|
+|Single|IC2|
+|Single|SPI|
+|Dual|IC2|
+|Dual|SPI|
 
 # Configuration   
 ![config-top](https://user-images.githubusercontent.com/6020549/148172889-67e97980-84bb-48c9-ab57-273b1379ec8c.jpg)
