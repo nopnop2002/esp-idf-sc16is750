@@ -17,13 +17,14 @@ This project has the following patterns:
 
 
 (*1)
-Input is completed with the terminator character.   
-Terminating character is CR + LF.   
+Input is completed with the terminating character.   
+Terminating character is LF.   
+You can change this using menuconfig.   
 
 (*2)
 Input is completed with the timeout.   
 Timeout is 500 mill sec.   
-
+You can change this using menuconfig.   
 
 # Configuration   
 ![config-top](https://user-images.githubusercontent.com/6020549/148177110-b951cd60-dea7-4d8d-b627-38477a29ae58.jpg)
