@@ -52,7 +52,7 @@ void setup() {
 void loop() {
   char buf[64];
   sprintf(buf,"Hello Wold %ld, Baudrate is %ld", millis(), baudrate);
-  Serial.print(buf);
+  Serial.println(buf);
   delay(1000);
 }
 ```
