@@ -12,7 +12,7 @@ This project has the following patterns:
 |--|SPI|INPUT using polling|
 |--|SPI|INPUT using interrupt|
 
-__It doesn't matter whether it's Single or Dual in GPIO operation.__   
+__The number of UART channels is irrelevant for GPIO operations.__   
 
 
 # Configuration   
@@ -70,6 +70,7 @@ GND------------+         |       |               |
 
 # Wireing for INPUT using interrupt   
 Interrupts are taken from GPIO16.   
+No pull-up resistor is needed.   
 ```
 ESP32                     Breakout
                          +------------------------
@@ -84,8 +85,8 @@ GND------------+         |       |               |
                          |       |               |
                          |       |               |
 GPIO16---------+--------IRQ--+--IRQ              |
-               |         |   |   |               |
-5V----10Kohm---+         |   |   |               |
+                         |   |   |               |
+                         |   |   |               |
                          |   |   |               |
                          |   |   +---------------+
                          |   |
