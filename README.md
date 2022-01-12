@@ -210,7 +210,7 @@ When the transmitter(=SC16IS75x) has data to be sent it de-asserts the RTS pin (
 
 ## API   
 You can set these using ```EnableRs485``` function.   
-No need to control the RTS pin.   
+This eliminates the need to control the RTS pin.   
 
 ## Wireing
 RS485-BUS need terminator register.   
