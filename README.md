@@ -201,12 +201,12 @@ void main() {
 # Using RS485   
 
 ## Auto RS-485 RTS control   
-When bit 4 of the EFCR register is set, the transmitter controls the state of the RTS pin.   
+When bit 4 of the EFCR register is set, the transmitter(=SC16IS75x) controls the state of the RTS pin.   
 The transmitter automatically asserts the RTS pin (logic 0) once the host writes data to the transmit FIFO, and de-asserts RTS pin (logic 1) once the last bit of the data has been transmitted.
 
 ## RS-485 RTS output inversion   
 EFCR bit 5 reverses the polarity of the RTS pin if the UART is in auto RS-485 RTS mode.   
-When the transmitter has data to be sent it de-asserts the RTS pin (logic 1), and when the last bit of the data has been sent out the transmitter asserts the RTS pin (logic 0).
+When the transmitter(=SC16IS75x) has data to be sent it de-asserts the RTS pin (logic 1), and when the last bit of the data has been sent out the transmitter asserts the RTS pin (logic 0).
 
 ## API   
 You can set these using ```EnableRs485``` function.   
