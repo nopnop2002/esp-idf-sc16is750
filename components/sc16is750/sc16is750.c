@@ -121,6 +121,11 @@ int SC16IS750_available(SC16IS750_t * dev, uint8_t channel)
 	return SC16IS750_FIFOAvailableData(dev, channel);
 }
 
+uint8_t SC16IS750_linestate(SC16IS750_t * dev, uint8_t channel)
+{
+	return SC16IS750_ReadRegister(dev, channel, SC16IS750_REG_LSR);
+}
+
 int SC16IS750_read(SC16IS750_t * dev, uint8_t channel)
 {
 	if ( dev->peek_flag == 0) {

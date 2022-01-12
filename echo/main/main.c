@@ -83,18 +83,30 @@ void echo(void *pvParameters)
 			}
 #endif
 			if (index_A < sizeof(buffer_A)-1) {
-				if (isupper(c)) {
-					buffer_A[index_A++] = tolower(c);
-				} else {
-					buffer_A[index_A++] = toupper(c);
-				}
+				buffer_A[index_A++] = (c);
 				buffer_A[index_A] = 0;
 			}
 		} else {
+			if (index_A != 0) ESP_LOGI(TAG, "buffer_A=[%s]", buffer_A);
 			for (int i=0;i<index_A;i++) {
+				if (isupper(buffer_A[i])) {
+					buffer_A[i] = tolower(buffer_A[i]);
+				} else {
+					buffer_A[i] = toupper(buffer_A[i]);
+				}
 				SC16IS750_write(&dev, SC16IS750_CHANNEL_A, buffer_A[i]);
 			}
+			buffer_A[0] = 0;
 			index_A = 0;
+
+			// Wait for transmission to complete
+			while(1) {
+				uint8_t state = SC16IS750_linestate(&dev, SC16IS750_CHANNEL_A);
+				if ( (state & 0x40) == 0x40) break; // THR and TSR empty.
+				ESP_LOGI(TAG, "Channel_A state=0x%02X", state);
+				vTaskDelay(1);
+			} // end while
+
 		} // end CHENNEL_A
 
 #if CONFIG_DUAL_CHANNEL
@@ -108,18 +120,30 @@ void echo(void *pvParameters)
 			}
 #endif
 			if (index_B < sizeof(buffer_B)-1) {
-				if (isupper(c)) {
-					buffer_B[index_B++] = tolower(c);
-				} else {
-					buffer_B[index_B++] = toupper(c);
-				}
+				buffer_B[index_B++] = (c);
 				buffer_B[index_B] = 0;
 			}
 		} else {
+			if (index_B != 0) ESP_LOGI(TAG, "buffer_B=[%s]", buffer_B);
 			for (int i=0;i<index_B;i++) {
+				if (isupper(buffer_B[i])) {
+					buffer_B[i] = tolower(buffer_B[i]);
+				} else {
+					buffer_B[i] = toupper(buffer_B[i]);
+				}
 				SC16IS750_write(&dev, SC16IS750_CHANNEL_B, buffer_B[i]);
 			}
+			buffer_B[0] = 0;
 			index_B = 0;
+
+			// Wait for transmission to complete
+			while(1) {
+				uint8_t state = SC16IS750_linestate(&dev, SC16IS750_CHANNEL_B);
+				if ( (state & 0x40) == 0x40) break; // THR and TSR empty.
+				ESP_LOGI(TAG, "Channel_B state=0x%02X", state);
+				vTaskDelay(1);
+			} // end while
+
 		} // end CHANNEL_B
 #endif
 		delay(10); // same as vTaskDelay(1)

@@ -143,6 +143,7 @@ typedef struct {
   int     SC16IS750_read(SC16IS750_t * dev, uint8_t channel);
   void    SC16IS750_write(SC16IS750_t * dev, uint8_t channel, uint8_t val);
   int     SC16IS750_available(SC16IS750_t * dev, uint8_t channel);
+  uint8_t SC16IS750_linestate(SC16IS750_t * dev, uint8_t channel);
   void    SC16IS750_pinMode(SC16IS750_t * dev, uint8_t pin, uint8_t io);
   void    SC16IS750_digitalWrite(SC16IS750_t * dev, uint8_t pin, uint8_t value);
   uint8_t SC16IS750_digitalRead(SC16IS750_t * dev, uint8_t pin);
