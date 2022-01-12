@@ -205,7 +205,7 @@ When bit 4 of the EFCR register is set, the transmitter controls the state of th
 The transmitter automatically asserts the RTS pin (logic 0) once the host writes data to the transmit FIFO, and de-asserts RTS pin (logic 1) once the last bit of the data has been transmitted.
 
 ## RS-485 RTS output inversion   
-EFCR bit 5 reverses the polarity of the RTS pin if the UART is in auto RS-485 RTS mode.
+EFCR bit 5 reverses the polarity of the RTS pin if the UART is in auto RS-485 RTS mode.   
 When the transmitter has data to be sent it de-asserts the RTS pin (logic 1), and when the last bit of the data has been sent out the transmitter asserts the RTS pin (logic 0).
 
 ## API   
