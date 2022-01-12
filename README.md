@@ -198,6 +198,41 @@ void main() {
 }
 ```
 
+# Using RS485   
+
+## Auto RS-485 RTS control   
+When bit 4 of the EFCR register is set, the transmitter controls the state of the RTS pin.   
+The transmitter automatically asserts the RTS pin (logic 0) once the host writes data to the transmit FIFO, and de-asserts RTS pin (logic 1) once the last bit of the data has been transmitted.
+
+## RS-485 RTS output inversion   
+EFCR bit 5 reverses the polarity of the RTS pin if the UART is in auto RS-485 RTS mode.
+When the transmitter has data to be sent it de-asserts the RTS pin (logic 1), and when the last bit of the data has been sent out the transmitter asserts the RTS pin (logic 0).
+
+## API   
+You can set these using ```EnableRs485``` function.   
+No need to control the RTS pin.   
+
+## Wireing
+RS485-BUS need terminator register.   
+According to the data sheet, MAX485 is a single 5V power source, but if the BUS length is short, it can be used at 3.3V.   
+When the length of BUS is long, MAX3485 is preferable.   
+
+```
+             VCC ---------------+                                   +--------------- VCC
+                                |                                   |
+                        +-------x-------+                   +-------x-------+
+RTX of SC16IS75X <------| RO            |                   |             RO|-----> RXD of SC16IS75X
+                        |              B|---+-----------+---|B              |
+TXD of SC16IS75X ------>| DI  MAX485    |   >           >   |    MAX485   DI|<----- TXD of SC16IS75X
+                        |               |   > RS485-BUS >   |               |
+RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---+
+                   |    |              A|---------------+---|A              |   |
+                   +----| /RE           |                   |            /RE|---+-- RTS of SC16IS75X
+                        +-------x-------+                   +-------x-------+
+                                |                                   |
+                               ---                                 ---
+```
+
 # Troubleshooting
 Such an error may occur.   
 If you change to a shorter wire, it will be fixed.   
