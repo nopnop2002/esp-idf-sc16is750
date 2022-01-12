@@ -82,6 +82,12 @@ enum SC16IS750_IIR {
   SC16IS750_CTS_RTS_CHANGE
 };
 
+// Extra Features Control Register
+enum INVERT_RTS_SIGNAL {
+	NO_INVERT_RTS_SIGNAL,
+	WITH_INVERT_RTS_SIGNAL
+};
+
 //Programmable I/O pins Direction register
 enum SC16IS750_IODIR {
 	OUTPUT,
@@ -173,6 +179,7 @@ typedef struct {
   uint8_t SC16IS750_FIFOAvailableSpace(SC16IS750_t * dev, uint8_t channel);
   void    SC16IS750_WriteByte(SC16IS750_t * dev, uint8_t channel, uint8_t val);
   int     SC16IS750_ReadByte(SC16IS750_t * dev, uint8_t channel);
+  void    SC16IS750_EnableRs485(SC16IS750_t * dev, uint8_t channel, uint8_t invert);
   void    SC16IS750_EnableTransmit(SC16IS750_t * dev, uint8_t channel, uint8_t tx_enable);
 
 #endif

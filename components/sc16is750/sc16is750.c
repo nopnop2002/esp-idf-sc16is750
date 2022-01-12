@@ -641,6 +641,20 @@ int SC16IS750_ReadByte(SC16IS750_t * dev, uint8_t channel)
 
 }
 
+void SC16IS750_EnableRs485(SC16IS750_t * dev, uint8_t channel, uint8_t invert)
+{
+	uint8_t temp_efcr;
+	temp_efcr = SC16IS750_ReadRegister(dev, channel, SC16IS750_REG_EFCR);
+	if ( invert == NO_INVERT_RTS_SIGNAL) {
+		temp_efcr |= 0x20;
+	} else {
+		temp_efcr |= 0x30;
+	}
+	SC16IS750_WriteRegister(dev, channel, SC16IS750_REG_EFCR,temp_efcr);
+
+	return;
+}
+
 void SC16IS750_EnableTransmit(SC16IS750_t * dev, uint8_t channel, uint8_t tx_enable)
 {
 	uint8_t temp_efcr;
