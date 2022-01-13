@@ -96,7 +96,7 @@ When the length of BUS is long distance, MAX3485 is preferable.
              VCC ---------------+                                   +--------------- VCC
                                 |                                   |
                         +-------x-------+                   +-------x-------+
-RTX of SC16IS75X <------| RO            |                   |             RO|-----> RXD of Other side
+RXD of SC16IS75X <------| RO            |                   |             RO|-----> RXD of Other side
                         |              B|---+-----------+---|B              |
 TXD of SC16IS75X ------>| DI  MAX485    |   >           >   |    MAX485   DI|<----- TXD of Other side
                         |               |   > RS485-BUS >   |               |
