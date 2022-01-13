@@ -103,10 +103,56 @@ TXD of SC16IS75X ------>| DI  MAX485    |   >           >   |    MAX485   DI|<--
                         |               |   > RS485-BUS >   |               |
 RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---+
                    |    |              A|---+-----------+---|A              |   |
-                   +----| /RE           |                   |            /RE|---+-- RTS of Other side
+                   +----| /RE           |                   |            /RE|---+-- GPIO of Other side
                         +-------x-------+                   +-------x-------+
                                 |                                   |
                                ---                                 ---
+```
+# Sketch of the other side   
+I used UNO.   
+GPIO3 is used to control RTS.   
+```
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(10, 11); // RX, TX
+
+#define baudrate 9600L
+#define RS485_MODE 1
+#define TXDEN 3 // Connect to the DE port of the rs485 transceiver
+
+long lastMsg = 0;
+
+void setup() {
+  Serial.begin(115200);
+  mySerial.begin(baudrate);
+#if (RS485_MODE)
+  pinMode(TXDEN, OUTPUT);
+#endif
+
+}
+
+void loop() {
+  long now = millis();
+  if (now - lastMsg > 1000) {
+    lastMsg = now;
+    char buf[64];
+    sprintf(buf,"Hello Wold %ld, Baudrate is %ld", millis(), baudrate);
+#if (RS485_MODE)
+    digitalWrite(TXDEN, HIGH);
+#endif
+    mySerial.println(buf);
+    mySerial.flush();
+#if (RS485_MODE)
+    digitalWrite(TXDEN, LOW);
+#endif
+  }
+
+  if (mySerial.available() > 0) {
+    int data = mySerial.read();
+    Serial.write(data);
+    //Serial.println(data, HEX);
+  }  
+
+}
 ```
 
 - for Single channel   
