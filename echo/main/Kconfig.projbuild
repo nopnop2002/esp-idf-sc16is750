@@ -129,7 +129,7 @@ menu "SC16IS750 Configuration"
 
 	config INVERT_RS1
 		depends on AUTO_RS1
-		bool "Enable Auto RS-485 RTS control for channel 1"
+		bool "Enable RS-485 RTS output inversion for channel 1"
 		default false
 		help
 			RS-485 RTS output inversion for channel 1.
@@ -150,7 +150,7 @@ menu "SC16IS750 Configuration"
 
 	config INVERT_RS2
 		depends on AUTO_RS2
-		bool "Enable Auto RS-485 RTS control for channel 2"
+		bool "Enable RS-485 RTS output inversion for channel 2"
 		default false
 		help
 			RS-485 RTS output inversion for channel 2.
