@@ -102,11 +102,11 @@ RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---
 ```
 
 - for Single channel   
-![config-echo-11](https://user-images.githubusercontent.com/6020549/149246483-cd37626c-a18a-4562-9c22-29913b623c3e.jpg)
+![config-echo-11](https://user-images.githubusercontent.com/6020549/149248222-6bbb843e-09c7-4c40-9354-106a0bec81b9.jpg)
 ![config-echo-12](https://user-images.githubusercontent.com/6020549/149247631-2c33f1ee-036a-40ca-8517-aa567072e3c7.jpg)
 
 - for Dual channel   
-![config-echo-12](https://user-images.githubusercontent.com/6020549/149247631-2c33f1ee-036a-40ca-8517-aa567072e3c7.jpg)
+![config-echo-21](https://user-images.githubusercontent.com/6020549/149248227-b7dafd1e-d7b2-45c4-8116-9da894dbefc1.jpg)
 ![config-echo-22](https://user-images.githubusercontent.com/6020549/149247647-9ff9c291-5763-4be7-ac56-755c927724e7.jpg)
 
 
