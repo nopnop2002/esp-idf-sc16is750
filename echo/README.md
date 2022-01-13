@@ -14,8 +14,12 @@ This project has the following patterns:
 
 # Configuration   
 ![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
-![config-echo-1](https://user-images.githubusercontent.com/6020549/148176378-da936cfc-c2af-4ab9-8c20-dd2fddbbabd9.jpg)
-![config-echo-2](https://user-images.githubusercontent.com/6020549/148176381-6f1e9d38-0861-432a-8c54-6e67329c5aa6.jpg)
+
+- for Single channel   
+![config-echo-10](https://user-images.githubusercontent.com/6020549/149246477-b3941ccd-809a-4428-8aac-c57da41a4edf.jpg)
+
+- for Dual channel   
+![config-echo-20](https://user-images.githubusercontent.com/6020549/149246600-ca0a5522-706a-49ae-9356-550a6fb24d88.jpg)
 
 # Wireing for single channel  
 Connect RX and other computer TX at any baud rate.   
@@ -61,6 +65,50 @@ void loop() {
 
 }
 ```
+
+# Using RS485   
+
+## Auto RS-485 RTS control   
+When bit 4 of the EFCR register is set, the transmitter(=SC16IS75x) controls the state of the RTS pin.   
+The transmitter automatically asserts the RTS pin (logic 0) once the host writes data to the transmit FIFO, and de-asserts RTS pin (logic 1) once the last bit of the data has been transmitted.
+
+## RS-485 RTS output inversion   
+EFCR bit 5 reverses the polarity of the RTS pin if the UART is in auto RS-485 RTS mode.   
+When the transmitter(=SC16IS75x) has data to be sent it de-asserts the RTS pin (logic 1), and when the last bit of the data has been sent out the transmitter asserts the RTS pin (logic 0).
+
+## API   
+You can set these using ```EnableRs485``` function.   
+This eliminates the need to control the RTS pin.   
+
+## Wireing
+RS485-BUS need terminator register.   
+According to the data sheet, MAX485 is a single 5V power source, but if the BUS length is short, it can be used at 3.3V.   
+When the length of BUS is long, MAX3485 is preferable.   
+
+```
+             VCC ---------------+                                   +--------------- VCC
+                                |                                   |
+                        +-------x-------+                   +-------x-------+
+RTX of SC16IS75X <------| RO            |                   |             RO|-----> RXD of Other side
+                        |              B|---+-----------+---|B              |
+TXD of SC16IS75X ------>| DI  MAX485    |   >           >   |    MAX485   DI|<----- TXD of Other side
+                        |               |   > RS485-BUS >   |               |
+RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---+
+                   |    |              A|---+-----------+---|A              |   |
+                   +----| /RE           |                   |            /RE|---+-- RTS of Other side
+                        +-------x-------+                   +-------x-------+
+                                |                                   |
+                               ---                                 ---
+```
+
+- for Single channel   
+![config-echo-11](https://user-images.githubusercontent.com/6020549/149246483-cd37626c-a18a-4562-9c22-29913b623c3e.jpg)
+![config-echo-12](https://user-images.githubusercontent.com/6020549/149246491-d5ff6341-3a79-4f4b-abb6-52238f1a0456.jpg)
+
+- for Dual channel   
+![config-echo-21](https://user-images.githubusercontent.com/6020549/149246759-90ef51c7-3029-46e0-993a-e21449ebd389.jpg)
+![config-echo-22](https://user-images.githubusercontent.com/6020549/149246768-fe3e7cfe-08b9-44f6-91b1-02dba8741095.jpg)
+
 
 # Screen Shot of other side   
 ![echo-1](https://user-images.githubusercontent.com/6020549/148186633-5778c802-a75c-453a-9974-1e78f87ab1dc.jpg)

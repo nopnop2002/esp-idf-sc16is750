@@ -64,6 +64,31 @@ void echo(void *pvParameters)
 	}
 	ESP_LOGI(TAG, "start serial communication");
 
+#if CONFIG_AUTO_RS1
+	ESP_LOGI(TAG, "CHANNEL_A is Auto RS-485 RTS control");
+#if CONFIG_INVERT_RS1
+	ESP_LOGI(TAG, "CHANNEL_A is WITH_INVERT_RTS_SIGNAL");
+	SC16IS750_EnableRs485(&dev, SC16IS750_CHANNEL_A, WITH_INVERT_RTS_SIGNAL);
+#else
+	ESP_LOGI(TAG, "CHANNEL_A is NO_INVERT_RTS_SIGNAL");
+	SC16IS750_EnableRs485(&dev, SC16IS750_CHANNEL_A, NO_INVERT_RTS_SIGNAL);
+#endif // CONFIG_INVERT_RS1
+#endif // CONFIG_AUTO_RS1
+
+#if CONFIG_DUAL_CHANNEL
+#if CONFIG_AUTO_RS2
+	ESP_LOGI(TAG, "CHANNEL_B is Auto RS-485 RTS control");
+#if CONFIG_INVERT_RS2
+	ESP_LOGI(TAG, "CHANNEL_B is WITH_INVERT_RTS_SIGNAL");
+	SC16IS750_EnableRs485(&dev, SC16IS750_CHANNEL_B, WITH_INVERT_RTS_SIGNAL);
+#else
+	ESP_LOGI(TAG, "CHANNEL_A is NO_INVERT_RTS_SIGNAL");
+	SC16IS750_EnableRs485(&dev, SC16IS750_CHANNEL_B, NO_INVERT_RTS_SIGNAL);
+#endif // CONFIG_INVERT_RS2
+#endif // CONFIG_AUTO_RS2
+#endif // CONFIG_DUAL_CHANNEL
+
+
 	char buffer_A[64] = {0};
 	int index_A = 0;
 #if CONFIG_DUAL_CHANNEL
@@ -83,8 +108,10 @@ void echo(void *pvParameters)
 			}
 #endif
 			if (index_A < sizeof(buffer_A)-1) {
-				buffer_A[index_A++] = (c);
-				buffer_A[index_A] = 0;
+				if (c != 0) {
+					buffer_A[index_A++] = (c);
+					buffer_A[index_A] = 0;
+				}
 			}
 		} else {
 			if (index_A != 0) ESP_LOGI(TAG, "buffer_A=[%s]", buffer_A);
@@ -120,8 +147,10 @@ void echo(void *pvParameters)
 			}
 #endif
 			if (index_B < sizeof(buffer_B)-1) {
-				buffer_B[index_B++] = (c);
-				buffer_B[index_B] = 0;
+				if (c != 0) {
+					buffer_B[index_B++] = (c);
+					buffer_B[index_B] = 0;
+				}
 			}
 		} else {
 			if (index_B != 0) ESP_LOGI(TAG, "buffer_B=[%s]", buffer_B);
