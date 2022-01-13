@@ -4,13 +4,20 @@ Converts the entered characters from uppercase to lowercase and from lowercase t
 
 This project has the following patterns:
 
-|# of UART|Interface|
-|:-:|:-:|
-|Single|IC2|
-|Single|SPI|
-|Dual|IC2|
-|Dual|SPI|
-
+|# of UART|Interface|RS485|RTS Signal Inversion|
+|:-:|:-:|:-:|:-:|
+|Single|IC2|Disable||
+|Single|SPI|Disable||
+|Single|IC2|Enable|Disable|
+|Single|SPI|Enable|Disable|
+|Single|IC2|Enable|Enable|
+|Single|SPI|Enable|Enable|
+|Dual|IC2|Disable||
+|Dual|SPI|Disable||
+|Dual|IC2|Enable|Disable|
+|Dual|SPI|Enable|Disable|
+|Dual|IC2|Enable|Enable|
+|Dual|SPI|Enable|Enable|
 
 # Configuration   
 ![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
