@@ -89,8 +89,9 @@ This eliminates the need to control the RTS pin.
 
 ## Wireing
 RS485-BUS need terminator register.   
-According to the data sheet, MAX485 is a single 5V power source, but if the BUS length is short, it can be used at 3.3V.   
-When the length of BUS is long, MAX3485 is preferable.   
+__Note__   
+According to the data sheet, MAX485 is a single 5V power source, but if the BUS length is short distance, it can be used at 3.3V.   
+When the length of BUS is long distance, MAX3485 is preferable.   
 
 ```
              VCC ---------------+                                   +--------------- VCC
