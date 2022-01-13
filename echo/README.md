@@ -19,19 +19,18 @@ This project has the following patterns:
 |Dual|IC2|Enable|Enable|
 |Dual|SPI|Enable|Enable|
 
-# Configuration   
+# Configuration for Single channel   
 ![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
-
-- for Single channel   
 ![config-echo-10](https://user-images.githubusercontent.com/6020549/149246477-b3941ccd-809a-4428-8aac-c57da41a4edf.jpg)
-
-- for Dual channel   
-![config-echo-20](https://user-images.githubusercontent.com/6020549/149246600-ca0a5522-706a-49ae-9356-550a6fb24d88.jpg)
 
 # Wireing for single channel  
 Connect RX and other computer TX at any baud rate.   
 Connect TX and other computer RX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
+
+# Configuration for Dual channel   
+![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
+![config-echo-20](https://user-images.githubusercontent.com/6020549/149246600-ca0a5522-706a-49ae-9356-550a6fb24d88.jpg)
 
 # Wireing for dual channel  
 Connect RX of ChannelA and other computer TX at any baud rate.   
@@ -108,7 +107,7 @@ RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---
                                 |                                   |
                                ---                                 ---
 ```
-# Sketch of the other side   
+## Sketch of the other side   
 I used UNO.   
 GPIO3 is used to control RTS.   
 ```
@@ -155,11 +154,11 @@ void loop() {
 }
 ```
 
-- for Single channel   
+## Configuration for Single channel   
 ![config-echo-11](https://user-images.githubusercontent.com/6020549/149248222-6bbb843e-09c7-4c40-9354-106a0bec81b9.jpg)
 ![config-echo-12](https://user-images.githubusercontent.com/6020549/149247631-2c33f1ee-036a-40ca-8517-aa567072e3c7.jpg)
 
-- for Dual channel   
+## Configuration for Dual channel   
 ![config-echo-21](https://user-images.githubusercontent.com/6020549/149248227-b7dafd1e-d7b2-45c4-8116-9da894dbefc1.jpg)
 ![config-echo-22](https://user-images.githubusercontent.com/6020549/149247647-9ff9c291-5763-4be7-ac56-755c927724e7.jpg)
 
