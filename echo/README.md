@@ -39,8 +39,7 @@ Connect RX of ChannelB and other computer TX at any baud rate.
 Connect TX of ChannelB and other computer RX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
 
-# Sketch of the other side   
-I used UNO.   
+# Sketch of UART communication using atmega328   
 ```
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(10, 11); // RX, TX
@@ -107,8 +106,7 @@ RTS of SC16IS75X --+--->| DE            |   >           >   |             DE|---
                                 |                                   |
                                ---                                 ---
 ```
-## Sketch of the other side   
-I used UNO.   
+## Sketch of RS485 communication using atmega328   
 GPIO3 is used to control RTS.   
 ```
 #include <SoftwareSerial.h>
