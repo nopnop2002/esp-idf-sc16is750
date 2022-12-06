@@ -1,5 +1,7 @@
 # esp-idf-sc16is750
-sc16is750/752 driver for esp-idf.
+sc16is750/752 driver for esp-idf.   
+ESP32 has up to 3 hardware UARTs.   
+This allows you to add two more hardware UARTs.   
 
 ## SC16IS750 Breakout
 SC16IS750 has a single channel UART and eight GPIOs.   
