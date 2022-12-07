@@ -83,34 +83,16 @@ __Therefore, when using IRQ, an external pull-up resistor is required.__
 esp-idf v4.4 or later.   
 This is because this version supports ESP32-C3.   
 
-# Installation for ESP32
+# Installation
 ```
 git clone https://github.com/nopnop2002/esp-idf-sc16is750
 cd esp-idf-sc16is750/selftest
-idf.py set-target esp32
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
 idf.py menuconfig
 idf.py flash
 ```
 
-# Installation for ESP32-S2
-```
-git clone https://github.com/nopnop2002/esp-idf-sc16is750
-cd esp-idf-sc16is750/selftest
-idf.py set-target esp32s2
-idf.py menuconfig
-idf.py flash
-```
-
-# Installation for ESP32-C3
-```
-git clone https://github.com/nopnop2002/esp-idf-sc16is750
-cd esp-idf-sc16is750/selftest
-idf.py set-target esp32c3
-idf.py menuconfig
-idf.py flash
-```
-
-__Note__   
+__Note for ESP32C3__   
 For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
 According to the ESP32C3 specifications, these pins can also be used as SPI clocks.   
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
@@ -118,18 +100,18 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 
 # Wireing for i2c
 
-|SC16IS750/752||ESP32|
-|:-:|:-:|:-:|
-|VCC|--|5V(*1)|
-|GND|--|GND|
-|RESET|--|N/C|
-|A0/CS|--|5V(*2)|
-|A1/SI|--|5V(*2)||
-|NC/SO|--|N/C|
-|IRQ|--|N/C|
-|I2C/SPI|--|5V|
-|SCL/SCLK|--|GPIO22(*3)|
-|SDA/VSS|--|GPIO21(*3)|
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C3||
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|VCC|--|5V|5V|5V|(*1)|
+|GND|--|GND|GND|GND||
+|RESET|--|N/C|N/C|N/C||
+|A0/CS|--|5V|5V|5V|(*2)|
+|A1/SI|--|5V|5V|5V|(*2)|
+|NC/SO|--|N/C|N/C|N/C||
+|IRQ|--|N/C|N/C|N/C||
+|I2C/SPI|--|5V|5V|5V||
+|SCL/SCLK|--|GPIO22|GPIO12|GPIO6|(*3)|
+|SDA/VSS|--|GPIO21|GPIO11|GPIO5|(*3)|
 
 (*1)
 The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, which provides 3.3V to the chip.   
@@ -152,18 +134,18 @@ You can change any pin using menuconfig.
 
 # Wireing for SPI
 
-|SC16IS750/752||ESP32|
-|:-:|:-:|:-:|
-|VCC|--|5V(*1)|
-|GND|--|GND|
-|RESET|--|N/C|
-|A0/CS|--|CS(*2)|
-|A1/SI|--|MOSI(*2)|
-|NC/SO|--|MISO(*2)|
-|IRQ|--|N/C|
-|I2C/SPI|--|GND|
-|SCL/SCLK|--|SCK(*2)|
-|SDA/VSS|--|GND|
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C3||
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|VCC|--|5V|5V|5V|(*1)|
+|GND|--|GND|GND|GND||
+|RESET|--|N/C|N/C|N/C||
+|A0/CS|--|GPIO5|GPIO34|GPIO4|(*2)|
+|A1/SI|--|GPIO23|GPIO35|GPIO1|(*2)|
+|NC/SO|--|GPIO19|GPIO37|GPIO3|(*2)|
+|IRQ|--|N/C|N/C|N/C||
+|I2C/SPI|--|GND|GND|GND||
+|SCL/SCLK|--|GPIO18|GPIO36|GPIO2|(*2)|
+|SDA/VSS|--|GND|GND|GND||
 
 (*1)
 The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, which provides 3.3V to the chip.   
