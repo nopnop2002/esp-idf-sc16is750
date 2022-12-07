@@ -116,7 +116,7 @@ void echo(void *pvParameters)
 		} else {
 			if (index_A != 0) ESP_LOGI(TAG, "buffer_A=[%s]", buffer_A);
 			for (int i=0;i<index_A;i++) {
-				if (isupper(buffer_A[i])) {
+				if (isupper((int)buffer_A[i])) {
 					buffer_A[i] = tolower(buffer_A[i]);
 				} else {
 					buffer_A[i] = toupper(buffer_A[i]);
