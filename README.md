@@ -128,8 +128,8 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 |NC/SO|--|N/C|
 |IRQ|--|N/C|
 |I2C/SPI|--|5V|
-|SCL/SCLK|--|SCL(*3)|
-|SDA/VSS|--|SDA(*3)|
+|SCL/SCLK|--|GPIO22(*3)|
+|SDA/VSS|--|GPIO21(*3)|
 
 (*1)
 The SC16IS750 breakout board is equipped with a MIC5219 LG33 voltage regulator, which provides 3.3V to the chip.   
