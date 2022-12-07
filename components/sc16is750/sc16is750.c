@@ -105,7 +105,7 @@ void SC16IS750_spi(SC16IS750_t * dev, int16_t mosi, int16_t miso, int16_t sclk)
 void SC16IS750_begin(SC16IS750_t * dev, uint32_t baud_A, uint32_t baud_B, long crystal_freq)
 {
 	dev->crystal_freq = crystal_freq;
-	SC16IS750_ResetDevice(dev);
+	//SC16IS750_ResetDevice(dev);
 	SC16IS750_FIFOEnable(dev, SC16IS750_CHANNEL_A, 1);
 	SC16IS750_SetBaudrate(dev, SC16IS750_CHANNEL_A, baud_A);
 	SC16IS750_SetLine(dev, SC16IS750_CHANNEL_A, 8, 0, 1);
@@ -715,7 +715,6 @@ int16_t SC16IS750_readwithtimeout(SC16IS750_t * dev, uint8_t * channel)
 			}
 		}
 		delay(10);
-		//delayMicroseconds(1);
 	} while(millis() - time_stamp < dev->timeout);
 	return -1;	 // -1 indicates timeout
 }

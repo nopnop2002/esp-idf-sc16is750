@@ -98,7 +98,7 @@ enum SC16IS750_IODIR {
 //#define SC16IS750_CRYSTCAL_FREQ (14745600UL) 
 //#define SC16IS750_CRYSTCAL_FREQ (1843200UL)   
 //#define SC16IS750_CRYSTCAL_FREQ (16000000UL)    
-//#define SC16IS750_DEBUG_PRINT (0)
+//#define   SC16IS750_DEBUG_PRINT (0)
 #define   SC16IS750_PROTOCOL_I2C  (0)
 #define   SC16IS750_PROTOCOL_SPI  (1)
 
@@ -113,10 +113,12 @@ enum SC16IS750_IODIR {
 
 #define   SC16IS750_DEFAULT_SPEED 9600
 
-#define delayMicroseconds(microsec) ets_delay_us(microsec)
-//#define delay(millsec) ets_delay_us(millsec*1000)
-#define delay(millsec) vTaskDelay(millsec/portTICK_RATE_MS)
-#define millis() xTaskGetTickCount()*portTICK_RATE_MS
+//#define delayMicroseconds(microsec) ets_delay_us(microsec)
+//#define delay(millsec) vTaskDelay(millsec/portTICK_RATE_MS)
+//#define millis() xTaskGetTickCount()*portTICK_RATE_MS
+#define delayMicroseconds(microsec) esp_rom_delay_us(microsec)
+#define delay(millsec) esp_rom_delay_us(millsec*1000)
+#define millis() xTaskGetTickCount()*portTICK_PERIOD_MS
 
 #define HIGH 1
 #define LOW  0
@@ -131,13 +133,13 @@ typedef struct {
   uint8_t peek_flag;
   long crystal_freq;
   uint32_t timeout;
-	int channels;
-	spi_device_handle_t handle;
+  int channels;
+  spi_device_handle_t handle;
 } SC16IS750_t;
 
   void    SC16IS750_init(SC16IS750_t * dev, uint8_t prtcl, uint8_t addr, int channels);
   void    SC16IS750_HardReset(SC16IS750_t * dev, int16_t reset);
-	void    SC16IS750_i2c(SC16IS750_t * dev, int16_t sda, int16_t scl);
+  void    SC16IS750_i2c(SC16IS750_t * dev, int16_t sda, int16_t scl);
   void    SC16IS750_spi(SC16IS750_t * dev, int16_t mosi, int16_t miso, int16_t sclk);
   void    SC16IS750_begin(SC16IS750_t * dev, uint32_t baud_A, uint32_t baud_B, long crystal_freq);     
   int     SC16IS750_read(SC16IS750_t * dev, uint8_t channel);
@@ -155,7 +157,7 @@ typedef struct {
   void    SC16IS750_flush(SC16IS750_t * dev, uint8_t channel);
   uint8_t SC16IS750_GPIOGetPortState(SC16IS750_t * dev);
   uint8_t SC16IS750_InterruptPendingTest(SC16IS750_t * dev, uint8_t channel);
-	int16_t SC16IS750_InterruptEventTest(SC16IS750_t * dev, uint8_t channel);
+  int16_t SC16IS750_InterruptEventTest(SC16IS750_t * dev, uint8_t channel);
   void    SC16IS750_SetPinInterrupt(SC16IS750_t * dev, uint8_t io_int_ena);
   void    SC16IS750_InterruptControl(SC16IS750_t * dev, uint8_t channel, uint8_t int_ena);
   void    SC16IS750_ModemPin(SC16IS750_t * dev, uint8_t gpio); //gpio == 0, gpio[7:4] are modem pins, gpio == 1 gpio[7:4] are gpios
