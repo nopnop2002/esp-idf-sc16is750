@@ -71,6 +71,7 @@ GND------------+         |       |               |
 # Wireing for INPUT using interrupt   
 Interrupts are taken from GPIO16.   
 ESP-IDF does not require a pull-up resistor.   
+__SC16IS750 has a problem with the PCB and cannot use interrupts.__   
 ```
 ESP32                     Breakout
                          +------------------------
