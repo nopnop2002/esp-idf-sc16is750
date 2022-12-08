@@ -5,6 +5,7 @@ menu "SC16IS750 Configuration"
 		default 33 if IDF_TARGET_ESP32
 		default 46 if IDF_TARGET_ESP32S2
 		default 48 if IDF_TARGET_ESP32S3
+		default 18 if IDF_TARGET_ESP32C2
 		default 19 if IDF_TARGET_ESP32C3
 
 	choice UART_CHANNELS
@@ -50,7 +51,7 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 22 if IDF_TARGET_ESP32
 		default 12 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  6 if IDF_TARGET_ESP32C3
+		default  6 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to I2C SCL.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.
@@ -62,7 +63,7 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 21 if IDF_TARGET_ESP32
 		default 11 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  5 if IDF_TARGET_ESP32C3
+		default  5 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to I2C SDA.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.
@@ -74,7 +75,7 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default  5 if IDF_TARGET_ESP32
 		default 34 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  4 if IDF_TARGET_ESP32C3
+		default  4 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to SPI CS.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
@@ -87,7 +88,7 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 19 if IDF_TARGET_ESP32
 		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  3 if IDF_TARGET_ESP32C3
+		default  3 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to SPI MOSI.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -100,7 +101,7 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
 		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  1 if IDF_TARGET_ESP32C3
+		default  1 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to SPI MOSI.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -113,12 +114,29 @@ menu "SC16IS750 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
 		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  2 if IDF_TARGET_ESP32C3
+		default  2 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
 		help
 			GPIO number (IOxx) to SPI SCLK.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
 			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
 			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
+
+	choice SPI_HOST
+		depends on SPI_INTERFACE
+		prompt "SPI peripheral that controls this bus"
+		default SPI2_HOST
+		help
+			Select SPI peripheral that controls this bus.
+		config SPI2_HOST
+			bool "SPI2_HOST"
+			help
+				Use SPI2_HOST. This is also called HSPI_HOST.
+		config SPI3_HOST
+			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+			bool "SPI3_HOST"
+			help
+				USE SPI3_HOST. This is also called VSPI_HOST
+	endchoice
 
 	config BAUDRATE1
 		int "Communication speed of channel 1(bps)"
