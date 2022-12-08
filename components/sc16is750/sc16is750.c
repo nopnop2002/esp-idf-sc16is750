@@ -1,4 +1,5 @@
 #include <stdio.h>	
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdbool.h>	
 #include <stdlib.h>  
@@ -19,12 +20,12 @@
 #define I2C_FREQ 400000 // SC16IS75x supports 400 kbit/s maximum speed
 
 // spi stuff
-#ifdef CONFIG_IDF_TARGET_ESP32
-#define HOST_ID HSPI_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32S2
+#if CONFIG_SPI2_HOST
 #define HOST_ID SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32C3
-#define HOST_ID SPI2_HOST
+#elif CONFIG_SPI3_HOST
+#define HOST_ID SPI3_HOST
+#else
+#define HOST_ID SPI2_HOST // If i2c is selected
 #endif
 #define SPI_FREQ 1000000 // SC16IS75x supports 4 Mbit/s maximum SPI clock speed
 
@@ -284,23 +285,23 @@ int16_t SC16IS750_SetBaudrate(SC16IS750_t * dev, uint8_t channel, uint32_t baudr
 		prescaler = 4;
 	}
 
-	ESP_LOGD(TAG, "baudrate=%d",baudrate);
+	ESP_LOGD(TAG, "baudrate=%"PRIu32, baudrate);
 	//divisor = (SC16IS750_CRYSTCAL_FREQ/prescaler)/(baudrate*16);
 	uint32_t divisor1 = dev->crystal_freq/prescaler;
-	ESP_LOGD(TAG, "dev->crystal_freq=%ld prescaler=%d divisor1=%d",dev->crystal_freq, prescaler, divisor1);
+	ESP_LOGD(TAG, "dev->crystal_freq=%ld prescaler=%d divisor1=%"PRIu32, dev->crystal_freq, prescaler, divisor1);
 	uint32_t max_baudrate = divisor1/16;
-	ESP_LOGD(TAG, "max_baudrate=%d",max_baudrate);
+	ESP_LOGD(TAG, "max_baudrate=%"PRIu32, max_baudrate);
 	uint32_t divisor2 = baudrate*16;
-	ESP_LOGD(TAG, "divisor2=%d",divisor2);
+	ESP_LOGD(TAG, "divisor2=%"PRIu32, divisor2);
 	if (divisor2 > divisor1) {
-		ESP_LOGE(TAG, "This baudrate (%d) is not support",baudrate);
+		ESP_LOGE(TAG, "This baudrate (%"PRIu32") is not support",baudrate);
 		return 0;
 	}
 	//divisor = (dev->crystal_freq/prescaler)/(baudrate*16);
 	//divisor = divisor1/divisor2;
 	double wk = (double)divisor1/(double)divisor2;
 	divisor = wk + 0.999;
-	ESP_LOGD(TAG, "baudrate=%d divisor=%d",baudrate,divisor);
+	ESP_LOGD(TAG, "baudrate=%"PRIu32" divisor=%d",baudrate, divisor);
 
 	temp_lcr = SC16IS750_ReadRegister(dev, channel, SC16IS750_REG_LCR);
 	temp_lcr |= 0x80;
@@ -318,9 +319,9 @@ int16_t SC16IS750_SetBaudrate(SC16IS750_t * dev, uint8_t channel, uint32_t baudr
 #endif
 	actual_baudrate = (divisor1/divisor)/16;
 	error = baudrate - actual_baudrate;
-	ESP_LOGD(TAG, "actual_baudrate=%d error=%d", actual_baudrate, error);
+	ESP_LOGD(TAG, "actual_baudrate=%"PRIu32" error=%d", actual_baudrate, error);
 	if (error != 0) {
-		ESP_LOGW(TAG, "baudrate=%d actual_baudrate=%d", baudrate, actual_baudrate);
+		ESP_LOGW(TAG, "baudrate=%"PRIu32" actual_baudrate=%"PRIu32, baudrate, actual_baudrate);
 	}
 
 #ifdef	SC16IS750_DEBUG_PRINT
