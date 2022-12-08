@@ -80,8 +80,8 @@ __Therefore, when using IRQ, an external pull-up resistor is required.__
 
 
 # Software requirements
-esp-idf v4.4 or later.   
-This is because this version supports ESP32-C3.   
+ESP-IDF V4.4/V5.0.   
+ESP-IDF V5 is required when using ESP32-C2.   
 
 # Installation
 ```
