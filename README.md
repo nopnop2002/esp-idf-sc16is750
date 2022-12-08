@@ -87,7 +87,7 @@ This is because this version supports ESP32-C3.
 ```
 git clone https://github.com/nopnop2002/esp-idf-sc16is750
 cd esp-idf-sc16is750/selftest
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
 ```
@@ -155,6 +155,19 @@ All pins are 5V tolerant.
 
 (*2)
 You can change any pin using menuconfig.   
+
+# SPI BUS selection   
+![config-spi-bus](https://user-images.githubusercontent.com/6020549/206341263-72d825c3-f35e-4047-b28e-dd077026cfdf.jpg)
+
+
+The ESP32 series has three SPI BUSs.   
+SPI1_HOST is used for communication with Flash memory.   
+You can use SPI2_HOST and SPI3_HOST freely.   
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
+When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
+Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
+
 
 # Baudrate generator   
 SC16IS750/752 has baudrate generator.   
