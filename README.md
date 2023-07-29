@@ -6,9 +6,10 @@ This will allow you to add two more hardware UARTs.
 __Note for SoftwareUART__   
 From ESP-IDF V5.1, a function called Dedicated GPIO has been added.   
 A sample of SoftwareUART using this function is published in the official sample.   
-This will allow you to add one more software UART.   
+This will allow you to add one more software UART without additional hardware.   
 Dedicated GPIO is available on the ESP32S and ESP32C series.   
-
+SoftwareUART supports these baud rates.   
+115200/230400/460800/921600 bps.   
 
 ## SC16IS750 Breakout
 SC16IS750 has a single channel UART and eight GPIOs.   
