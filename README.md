@@ -3,6 +3,12 @@ sc16is750/752 driver for esp-idf.
 ESP32 has up to 3 hardware UARTs.   
 This allows you to add two more hardware UARTs.   
 
+__Note for SoftwareUART__   
+From ESP-IDF V5.1, a function called Dedicated GPIO has been added.   
+A sample of SoftwareUART using this function is published in the official sample.   
+Dedicated GPIO is available on the ESP32S and ESP32C series.   
+
+
 ## SC16IS750 Breakout
 SC16IS750 has a single channel UART and eight GPIOs.   
 14.7456MHz crystal is used for SC16IS750.   
