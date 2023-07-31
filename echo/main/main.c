@@ -14,14 +14,14 @@
 
 void echo(void *pvParameters)
 {
-#if CONFIG_SINGLE_CHANNEL
-	ESP_LOGI(TAG, "UART is SINGLE CHANNEL");
+#if CONFIG_MODEL_SC16IS750
+	ESP_LOGI(TAG, "Your module is SC16IS750");
 	int channels = SC16IS750_SINGLE_CHANNEL;
 	long crystal_freq = 14745600UL;
 	uint32_t baud_A = CONFIG_BAUDRATE1;
 	uint32_t baud_B = SC16IS750_CHANNEL_NONE;
 #else
-	ESP_LOGI(TAG, "UART is DUAL CHANNEL");
+	ESP_LOGI(TAG, "Your module is SC16IS752");
 	int channels = SC16IS750_DUAL_CHANNEL;
 	long crystal_freq = 1843200UL;
 	uint32_t baud_A = CONFIG_BAUDRATE1;
@@ -50,7 +50,7 @@ void echo(void *pvParameters)
 #endif // CONFIG_SPI_INTERFACE
 
 	ESP_LOGI(TAG, "Communication speed of channel 1 is %d", CONFIG_BAUDRATE1);
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	ESP_LOGI(TAG, "Communication speed of channel 2 is %d", CONFIG_BAUDRATE2);
 #endif
 
@@ -75,7 +75,7 @@ void echo(void *pvParameters)
 #endif // CONFIG_INVERT_RS1
 #endif // CONFIG_AUTO_RS1
 
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 #if CONFIG_AUTO_RS2
 	ESP_LOGI(TAG, "CHANNEL_B is Auto RS-485 RTS control");
 #if CONFIG_INVERT_RS2
@@ -86,12 +86,12 @@ void echo(void *pvParameters)
 	SC16IS750_EnableRs485(&dev, SC16IS750_CHANNEL_B, NO_INVERT_RTS_SIGNAL);
 #endif // CONFIG_INVERT_RS2
 #endif // CONFIG_AUTO_RS2
-#endif // CONFIG_DUAL_CHANNEL
+#endif // CONFIG_MODEL_SC16IS752
 
 
 	char buffer_A[64] = {0};
 	int index_A = 0;
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	char buffer_B[64] = {0};
 	int index_B = 0;
 #endif
@@ -136,7 +136,7 @@ void echo(void *pvParameters)
 
 		} // end CHENNEL_A
 
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 		if (SC16IS750_available(&dev, SC16IS750_CHANNEL_B)) {
 			c = SC16IS750_read(&dev, SC16IS750_CHANNEL_B);
 #if 0
@@ -155,7 +155,7 @@ void echo(void *pvParameters)
 		} else {
 			if (index_B != 0) ESP_LOGI(TAG, "buffer_B=[%s]", buffer_B);
 			for (int i=0;i<index_B;i++) {
-				if (isupper(buffer_B[i])) {
+				if (isupper((int)buffer_B[i])) {
 					buffer_B[i] = tolower(buffer_B[i]);
 				} else {
 					buffer_B[i] = toupper(buffer_B[i]);

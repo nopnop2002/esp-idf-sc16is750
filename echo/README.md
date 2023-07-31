@@ -4,24 +4,24 @@ Converts the entered characters from uppercase to lowercase and from lowercase t
 
 This project has the following patterns:
 
-|# of UART|Interface|RS485|RTS Signal Inversion|
+|Model|Interface|RS485|RTS Signal Inversion|
 |:-:|:-:|:-:|:-:|
-|Single|IC2|Disable||
-|Single|SPI|Disable||
-|Single|IC2|Enable|Disable|
-|Single|SPI|Enable|Disable|
-|Single|IC2|Enable|Enable|
-|Single|SPI|Enable|Enable|
-|Dual|IC2|Disable||
-|Dual|SPI|Disable||
-|Dual|IC2|Enable|Disable|
-|Dual|SPI|Enable|Disable|
-|Dual|IC2|Enable|Enable|
-|Dual|SPI|Enable|Enable|
+|SC16IS750|IC2|Disable||
+|SC16IS750|SPI|Disable||
+|SC16IS750|IC2|Enable|Disable|
+|SC16IS750|SPI|Enable|Disable|
+|SC16IS750|IC2|Enable|Enable|
+|SC16IS750|SPI|Enable|Enable|
+|SC16IS752|IC2|Disable||
+|SC16IS752|SPI|Disable||
+|SC16IS752|IC2|Enable|Disable|
+|SC16IS752|SPI|Enable|Disable|
+|SC16IS752|IC2|Enable|Enable|
+|SC16IS752|SPI|Enable|Enable|
 
 # Configuration for Single channel   
-![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
-![config-echo-10](https://user-images.githubusercontent.com/6020549/149246477-b3941ccd-809a-4428-8aac-c57da41a4edf.jpg)
+![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/18a5d123-7313-4c51-aec2-699979c39467)
+![config-sc16is750](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/648ac135-2f07-4377-aa1e-152ff784a5bb)
 
 # Wireing for single channel  
 Connect RX and other computer TX at any baud rate.   
@@ -29,8 +29,8 @@ Connect TX and other computer RX at any baud rate.
 Connect Gnd of ESP32 and Gnd of other computer.   
 
 # Configuration for Dual channel   
-![config-top](https://user-images.githubusercontent.com/6020549/148176368-79ed4432-46ab-49b3-a86f-1872e73310d2.jpg)
-![config-echo-20](https://user-images.githubusercontent.com/6020549/149246600-ca0a5522-706a-49ae-9356-550a6fb24d88.jpg)
+![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/18a5d123-7313-4c51-aec2-699979c39467)
+![config-sc16is752](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/392629a2-55fa-4e4d-ae33-a0749ccbd31f)
 
 # Wireing for dual channel  
 Connect RX of ChannelA and other computer TX at any baud rate.   
@@ -153,12 +153,10 @@ void loop() {
 ```
 
 ## Configuration for Single channel   
-![config-echo-11](https://user-images.githubusercontent.com/6020549/149248222-6bbb843e-09c7-4c40-9354-106a0bec81b9.jpg)
-![config-echo-12](https://user-images.githubusercontent.com/6020549/149247631-2c33f1ee-036a-40ca-8517-aa567072e3c7.jpg)
+![config-rs485-1](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/6b389d02-184a-4040-b5cc-ccf56004b557)
 
 ## Configuration for Dual channel   
-![config-echo-21](https://user-images.githubusercontent.com/6020549/149248227-b7dafd1e-d7b2-45c4-8116-9da894dbefc1.jpg)
-![config-echo-22](https://user-images.githubusercontent.com/6020549/149247647-9ff9c291-5763-4be7-ac56-755c927724e7.jpg)
+![config-rs485-2](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/8b296ccd-de45-4d42-bde2-5042b2cbd8c1)
 
 
 # Screen Shot of other side   
