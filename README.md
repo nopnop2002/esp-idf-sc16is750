@@ -121,7 +121,7 @@ If you use this module at the same time as another I2C device using I2C port 0, 
 
 ## Wireing for i2c
 
-|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C3||
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|5V|5V|5V|(*1)|
 |GND|--|GND|GND|GND||
@@ -169,7 +169,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 ## Wireing for SPI
 
-|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C3||
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|5V|5V|5V|(*1)|
 |GND|--|GND|GND|GND||
