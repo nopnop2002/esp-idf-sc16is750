@@ -4,16 +4,16 @@ There is no transmission.
 
 This project has the following patterns:
 
-|# of UART|Interface|EOL|
+|Model|Interface|EOL|
 |:-:|:-:|:-:|
-|Single|IC2|(*1)|
-|Single|IC2|(*2)|
-|Single|SPI|(*1)|
-|Single|SPI|(*2)|
-|Dual|IC2|(*1)|
-|Dual|IC2|(*2)|
-|Dual|SPI|(*1)|
-|Dual|SPI|(*2)|
+|SC16IS750|IC2|(*1)|
+|SC16IS750|IC2|(*2)|
+|SC16IS750|SPI|(*1)|
+|SC16IS750|SPI|(*2)|
+|SC16IS752|IC2|(*1)|
+|SC16IS752|IC2|(*2)|
+|SC16IS752|SPI|(*1)|
+|SC16IS752|SPI|(*2)|
 
 
 (*1)
@@ -27,15 +27,15 @@ Timeout is 500 mill sec.
 You can change this using menuconfig.   
 
 # Configuration   
-![config-top](https://user-images.githubusercontent.com/6020549/148177110-b951cd60-dea7-4d8d-b627-38477a29ae58.jpg)
-![config-receiver-character](https://user-images.githubusercontent.com/6020549/148177129-5512c565-86e7-4425-9ad4-0a4642b49117.jpg)
-![config-receiver-timeout](https://user-images.githubusercontent.com/6020549/148177140-280ab07b-cc58-40e7-8491-047d0c046137.jpg)
+![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/b1a0a8b2-fb63-4247-b648-60f403fbfcfe)
+![config-receiver-character](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/b5b2f3f1-bccb-49c2-ad78-a4dc69b5e05e)
+![config-receiver-timeout](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/c6b8111e-fd7f-47bf-a8ac-567e33fa6853)
 
-# Wireing for single channel  
+# Wireing for SC16IS750  
 Connect RX and other computer TX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
 
-# Wireing for dual channel  
+# Wireing for SC16IS752  
 Connect RX of ChannelA and other computer TX at any baud rate.   
 Connect RX of ChannelB and other computer TX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   

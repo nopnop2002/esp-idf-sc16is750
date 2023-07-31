@@ -14,14 +14,14 @@
 #if CONFIG_INPUT_END_CHARACTER
 void character(void *pvParameters)
 {
-#if CONFIG_SINGLE_CHANNEL
-	ESP_LOGI(TAG, "UART is SINGLE CHANNEL");
+#if CONFIG_MODEL_SC16IS750
+	ESP_LOGI(TAG, "Your module is SC16IS750");
 	int channels = SC16IS750_SINGLE_CHANNEL;
 	long crystal_freq = 14745600UL;
 	uint32_t baud_A = CONFIG_BAUDRATE1;
 	uint32_t baud_B = SC16IS750_CHANNEL_NONE;
 #else
-	ESP_LOGI(TAG, "UART is DUAL CHANNEL");
+	ESP_LOGI(TAG, "Your module is SC16IS752");
 	int channels = SC16IS750_DUAL_CHANNEL;
 	long crystal_freq = 1843200UL;
 	uint32_t baud_A = CONFIG_BAUDRATE1;
@@ -51,7 +51,7 @@ void character(void *pvParameters)
 
 	ESP_LOGI(TAG, "Character at the end of input is 0x%02X", CONFIG_END_CHARACTER);
 	ESP_LOGI(TAG, "Communication speed of channel 1 is %d", CONFIG_BAUDRATE1);
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	ESP_LOGI(TAG, "Communication speed of channel 2 is %d", CONFIG_BAUDRATE2);
 #endif
 
@@ -68,7 +68,7 @@ void character(void *pvParameters)
 
 	char buffer_A[64] = {0};
 	int index_A = 0;
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	char buffer_B[64] = {0};
 	int index_B = 0;
 #endif
@@ -95,7 +95,7 @@ void character(void *pvParameters)
 			}
 		}
 
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 		if (SC16IS750_available(&dev, SC16IS750_CHANNEL_B)) {
 			c = SC16IS750_read(&dev, SC16IS750_CHANNEL_B);
 #if 0
@@ -125,18 +125,18 @@ void character(void *pvParameters)
 #if CONFIG_INPUT_END_TIMEOUT
 void timeout(void *pvParameters)
 {
-#if CONFIG_SINGLE_CHANNEL
-	ESP_LOGI(TAG, "UART is SINGLE CHANNEL");
+#if CONFIG_MODEL_SC16IS750
+	ESP_LOGI(TAG, "Your module is SC16IS750");
 	int channels = SC16IS750_SINGLE_CHANNEL;
 	long crystal_freq = 14745600UL;
-  uint32_t baud_A = CONFIG_BAUDRATE1;
-  uint32_t baud_B = SC16IS750_CHANNEL_NONE;
+	uint32_t baud_A = CONFIG_BAUDRATE1;
+	uint32_t baud_B = SC16IS750_CHANNEL_NONE;
 #else
-	ESP_LOGI(TAG, "UART is DUAL CHANNEL");
+	ESP_LOGI(TAG, "Your module is SC16IS752");
 	int channels = SC16IS750_DUAL_CHANNEL;
 	long crystal_freq = 1843200UL;
-  uint32_t baud_A = CONFIG_BAUDRATE1;
-  uint32_t baud_B = CONFIG_BAUDRATE2;
+	uint32_t baud_A = CONFIG_BAUDRATE1;
+	uint32_t baud_B = CONFIG_BAUDRATE2;
 #endif
 
 	SC16IS750_t dev;
@@ -162,7 +162,7 @@ void timeout(void *pvParameters)
 
 	ESP_LOGI(TAG, "Time-out millisecond at the end of input is %d", CONFIG_END_TIMEOUT);
 	ESP_LOGI(TAG, "Communication speed of channel 1 is %d", CONFIG_BAUDRATE1);
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	ESP_LOGI(TAG, "Communication speed of channel 2 is %d", CONFIG_BAUDRATE2);
 #endif
 
@@ -178,7 +178,7 @@ void timeout(void *pvParameters)
 
 	char buffer_A[64] = {0};
 	int index_A = 0;
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 	char buffer_B[64] = {0};
 	int index_B = 0;
 #endif
@@ -198,7 +198,7 @@ void timeout(void *pvParameters)
 					buffer_A[index_A++] = c;
 					buffer_A[index_A] = 0;
 				}
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 			} else {
 				if (index_B < sizeof(buffer_B)-1) {
 					buffer_B[index_B++] = c;
@@ -210,7 +210,7 @@ void timeout(void *pvParameters)
 			ESP_LOGI(TAG, "[CH_A] %s",buffer_A);
 			index_A = 0;
 			buffer_A[0] = 0;
-#if CONFIG_DUAL_CHANNEL
+#if CONFIG_MODEL_SC16IS752
 			ESP_LOGI(TAG, "[CH_B] %s",buffer_B);
 			index_B = 0;
 			buffer_B[0] = 0;
