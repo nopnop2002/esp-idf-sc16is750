@@ -18,12 +18,12 @@ bool isInterrupt = false;
 #if CONFIG_GPIO_OUTPUT
 void output(void *pvParameters)
 {
-#if CONFIG_SINGLE_CHANNEL
-	ESP_LOGI(TAG, "UART is SINGLE CHANNEL");
+#if CONFIG_MODEL_SC16IS750
+	ESP_LOGI(TAG, "Your module is SC16IS750");
 	int channels = SC16IS750_SINGLE_CHANNEL;
 	long crystal_freq = 14745600UL;
 #else
-	ESP_LOGI(TAG, "UART is DUAL CHANNEL");
+	ESP_LOGI(TAG, "Your module is SC16IS752");
 	int channels = SC16IS750_DUAL_CHANNEL;
 	long crystal_freq = 1843200UL;
 #endif
