@@ -139,11 +139,11 @@ void dual_channel(void *pvParameters)
 
 void app_main()
 {
-#if CONFIG_SINGLE_CHANNEL
-	ESP_LOGI(TAG, "UART is SINGLE CHANNEL");
+#if CONFIG_MODEL_SC16IS750
+	ESP_LOGI(TAG, "Your module is SC16IS750");
 	xTaskCreate(&single_channel, "SINGLE", 1024*2, NULL, 2, NULL);
 #else
-	ESP_LOGI(TAG, "UART is DUAL CHANNEL");
+	ESP_LOGI(TAG, "Your module is SC16IS752");
 	xTaskCreate(&dual_channel, "DUAL", 1024*2, NULL, 2, NULL);
 #endif
 

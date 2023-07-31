@@ -1,141 +1,18 @@
-menu "SC16IS750 Configuration"
+menu "Application Configuration"
 
-	config GPIO_RANGE_MAX
-		int
-		default 33 if IDF_TARGET_ESP32
-		default 46 if IDF_TARGET_ESP32S2
-		default 48 if IDF_TARGET_ESP32S3
-		default 18 if IDF_TARGET_ESP32C2
-		default 19 if IDF_TARGET_ESP32C3
-
-	choice UART_CHANNELS
-		prompt "Number of UARTs"
-		default SINGLE_CHANNEL
+	choice MODEL
+		prompt "Your module"
+		default MODEL_SC16IS750
 		help
-			Select Interface.
-		config SINGLE_CHANNEL
-			bool "One set of UART"
+			Select Hardware.
+		config MODEL_SC16IS750
+			bool "SC16IS750"
 			help
-				One set of UART.
-		config DUAL_CHANNEL
-			bool "Two sets of UART"
+				Your module is SC16IS750.
+		config MODEL_SC16IS752
+			bool "SC16IS752"
 			help
-				2 sets of UART.
-	endchoice
-
-	choice INTERFACE
-		prompt "Interface"
-		default I2C_INTERFACE
-		help
-			Select Interface.
-		config I2C_INTERFACE
-			bool "I2C Interface"
-			help
-				I2C Interface.
-		config SPI_INTERFACE
-			bool "SPI Interface"
-			help
-				SPI Interface.
-	endchoice
-
-	config I2C_ADDRESS
-		depends on I2C_INTERFACE
-		hex "I2C address"
-		default 0x48
-		help
-			I2C address.
-
-	config SCL_GPIO
-		depends on I2C_INTERFACE
-		int "SCL GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default 22 if IDF_TARGET_ESP32
-		default 12 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  6 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to I2C SCL.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.
-			GPIOs 35-39 are input-only so cannot be used as outputs.
-
-	config SDA_GPIO
-		depends on I2C_INTERFACE
-		int "SDA GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default 21 if IDF_TARGET_ESP32
-		default 11 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  5 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to I2C SDA.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to I2C.
-			GPIOs 35-39 are input-only so cannot be used as outputs.
-
-	config CS_GPIO
-		depends on SPI_INTERFACE
-		int "CS GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default  5 if IDF_TARGET_ESP32
-		default 34 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  4 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to SPI CS.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
-			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
-			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
-
-	config MISO_GPIO
-		depends on SPI_INTERFACE
-		int "MISO GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default 19 if IDF_TARGET_ESP32
-		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  3 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to SPI MOSI.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
-			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
-			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
-
-	config MOSI_GPIO
-		depends on SPI_INTERFACE
-		int "MOSI GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default 23 if IDF_TARGET_ESP32
-		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  1 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to SPI MOSI.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
-			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
-			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
-
-	config SCLK_GPIO
-		depends on SPI_INTERFACE
-		int "SCLK GPIO number"
-		range 0 GPIO_RANGE_MAX
-		default 18 if IDF_TARGET_ESP32
-		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  2 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
-		help
-			GPIO number (IOxx) to SPI SCLK.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
-			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
-			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
-
-	choice SPI_HOST
-		depends on SPI_INTERFACE
-		prompt "SPI peripheral that controls this bus"
-		default SPI2_HOST
-		help
-			Select SPI peripheral that controls this bus.
-		config SPI2_HOST
-			bool "SPI2_HOST"
-			help
-				Use SPI2_HOST. This is also called HSPI_HOST.
-		config SPI3_HOST
-			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-			bool "SPI3_HOST"
-			help
-				USE SPI3_HOST. This is also called VSPI_HOST
+				Your module is SC16IS752.
 	endchoice
 
 endmenu

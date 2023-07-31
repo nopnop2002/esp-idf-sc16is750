@@ -10,15 +10,14 @@ This project has the following patterns:
 |Dual|IC2|
 |Dual|SPI|
 
-# Configuration   
-![config-top](https://user-images.githubusercontent.com/6020549/148172889-67e97980-84bb-48c9-ab57-273b1379ec8c.jpg)
-![config-sc16is750-1](https://user-images.githubusercontent.com/6020549/148172896-f2fbfc7a-3cb7-41de-88f5-783144e15425.jpg)
-![config-sc16is750-2](https://user-images.githubusercontent.com/6020549/148172904-0678461f-efba-4577-ae3e-02799d8be4d6.jpg)
+# Configuration for application
+![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/a585a00a-8d99-4acc-8db6-ff8c5acd3b49)
+![config-app](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/8bf684e6-ca0f-4e02-8bdd-c782e824427f)
 
 
-# Wireing for single channel  
+# Wireing for SC16IS750  
 Connect TX and RX with a short wire.   
 
-# Wireing for dual channel  
+# Wireing for SC16IS752  
 Connect TX of ChannelA and RX of ChannelB with a short wire.   
 Connect TX of ChannelB and RX of ChannelA with a short wire.   

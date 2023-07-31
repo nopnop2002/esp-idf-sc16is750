@@ -16,7 +16,13 @@
 #include "sc16is750.h"
 
 // i2c stuff
+#if CONFIG_I2C_PORT_0
 #define I2C_NUM I2C_NUM_0
+#elif CONFIG_I2C_PORT_1
+#define I2C_NUM I2C_NUM_1
+#else
+#define I2C_NUM I2C_NUM_0 // if spi is selected
+#endif
 #define I2C_FREQ 400000 // SC16IS75x supports 400 kbit/s maximum speed
 
 // spi stuff
