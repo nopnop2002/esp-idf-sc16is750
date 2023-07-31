@@ -106,7 +106,7 @@ For some reason, there are development boards that cannot use GPIO06, GPIO08, GP
 According to the ESP32C3 specifications, these pins can also be used as SPI clocks.   
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
 
-# Configuration
+# Configuration for device
 ![config-sc16is750](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/7a00528c-68e6-436f-9130-eef6754d5c52)
 
 ## Configuration for i2c
