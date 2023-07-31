@@ -26,14 +26,19 @@ Input is completed with the timeout.
 Timeout is 500 mill sec.   
 You can change this using menuconfig.   
 
-# Configuration   
+# Configuration for SC16IS750  
 ![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/b1a0a8b2-fb63-4247-b648-60f403fbfcfe)
-![config-receiver-character](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/b5b2f3f1-bccb-49c2-ad78-a4dc69b5e05e)
-![config-receiver-timeout](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/c6b8111e-fd7f-47bf-a8ac-567e33fa6853)
+![config-sc16is750-1](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/37750b1e-49e2-4e39-a357-fde7ca2326da)
+![config-sc16is750-2](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/514e5ae7-4e6c-47c5-8de2-0498bf6e7183)
 
 # Wireing for SC16IS750  
 Connect RX and other computer TX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
+
+# Configuration for SC16IS752  
+![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/b1a0a8b2-fb63-4247-b648-60f403fbfcfe)
+![config-sc16is752-1](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/54662fdc-2ea0-4cb6-95e1-273f8ecf8199)
+![config-sc16is752-2](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/6b2ca3ba-76cc-4f48-a8e4-0553109c4892)
 
 # Wireing for SC16IS752  
 Connect RX of ChannelA and other computer TX at any baud rate.   
