@@ -3,12 +3,12 @@ Loop back test only with Breakout board.
 
 This project has the following patterns:
 
-|# of UART|Interface|
+|Model|Interface|
 |:-:|:-:|
-|Single|IC2|
-|Single|SPI|
-|Dual|IC2|
-|Dual|SPI|
+|SC16IS750|IC2|
+|SC16IS750|SPI|
+|SC16IS752|IC2|
+|SC16IS752|SPI|
 
 # Configuration for application
 ![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/a585a00a-8d99-4acc-8db6-ff8c5acd3b49)
