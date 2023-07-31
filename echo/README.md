@@ -19,20 +19,20 @@ This project has the following patterns:
 |SC16IS752|IC2|Enable|Enable|
 |SC16IS752|SPI|Enable|Enable|
 
-# Configuration for Single channel   
+# Configuration for SC16IS750   
 ![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/18a5d123-7313-4c51-aec2-699979c39467)
 ![config-sc16is750](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/648ac135-2f07-4377-aa1e-152ff784a5bb)
 
-# Wireing for single channel  
+# Wireing for SC16IS750  
 Connect RX and other computer TX at any baud rate.   
 Connect TX and other computer RX at any baud rate.   
 Connect Gnd of ESP32 and Gnd of other computer.   
 
-# Configuration for Dual channel   
+# Configuration for SC16IS752   
 ![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/18a5d123-7313-4c51-aec2-699979c39467)
 ![config-sc16is752](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/392629a2-55fa-4e4d-ae33-a0749ccbd31f)
 
-# Wireing for dual channel  
+# Wireing for SC16IS752  
 Connect RX of ChannelA and other computer TX at any baud rate.   
 Connect TX of ChannelA and other computer RX at any baud rate.   
 Connect RX of ChannelB and other computer TX at any baud rate.   
@@ -152,10 +152,10 @@ void loop() {
 }
 ```
 
-## Configuration for Single channel   
+## Configuration for SC16IS750   
 ![config-rs485-1](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/6b389d02-184a-4040-b5cc-ccf56004b557)
 
-## Configuration for Dual channel   
+## Configuration for SC16IS752   
 ![config-rs485-2](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/8b296ccd-de45-4d42-bde2-5042b2cbd8c1)
 
 
