@@ -5,12 +5,12 @@ This project has the following patterns:
 
 |Model|Interface|Direction|
 |:-:|:-:|:-:|
-|--|IC2|OUTPUT|
-|--|IC2|INPUT using polling|
-|--|IC2|INPUT using interrupt|
-|--|SPI|OUTPUT|
-|--|SPI|INPUT using polling|
-|--|SPI|INPUT using interrupt|
+|SC16IS75x|IC2|OUTPUT|
+|SC16IS75x|IC2|INPUT using polling|
+|SC16IS752|IC2|INPUT using interrupt|
+|SC16IS75x|SPI|OUTPUT|
+|SC16IS75x|SPI|INPUT using polling|
+|SC16IS752|SPI|INPUT using interrupt|
 
 __The number of UART channels is irrelevant for GPIO operations.__   
 
@@ -19,7 +19,7 @@ __The number of UART channels is irrelevant for GPIO operations.__
 ![config-top](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/ffe3187e-f691-4e51-a734-62bce9a74e1c)
 ![config-output](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/423dd5d7-3f92-448c-a842-5cceddb9391e)
 ![config-input](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/4c83558f-c9dc-4fd9-acf2-b706d8917b5b)
-![config-interrupt](https://github.com/nopnop2002/esp-idf-sc16is750/assets/6020549/ffb287c7-ff40-40f0-a155-b3c343aaa735)
+![Image](https://github.com/user-attachments/assets/d19a9f63-3300-4110-b3e9-735fd99410d9)
 
 # Wireing for OUTPUT  
 Connect GPIO0 and LED.   
