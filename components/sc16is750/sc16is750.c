@@ -9,7 +9,7 @@
 #include "freertos/task.h"
 
 #include "esp_log.h"
-#include "driver/i2c.h"
+#include "driver/i2c_master.h"
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 
@@ -24,6 +24,7 @@
 #define I2C_NUM I2C_NUM_0 // if spi is selected
 #endif
 #define I2C_FREQ 400000 // SC16IS75x supports 400 kbit/s maximum speed
+#define I2C_TICKS_TO_WAIT 100 // Maximum ticks to wait before issuing a timeout.
 
 // spi stuff
 #if CONFIG_SPI2_HOST
@@ -34,6 +35,7 @@
 #define HOST_ID SPI2_HOST // If i2c is selected
 #endif
 #define SPI_FREQ 1000000 // SC16IS75x supports 4 Mbit/s maximum SPI clock speed
+
 
 #define TAG "SC16IS752"
 
@@ -65,21 +67,29 @@ void SC16IS750_HardReset(SC16IS750_t * dev, int16_t reset)
 
 void SC16IS750_i2c(SC16IS750_t * dev, int16_t sda, int16_t scl)
 {
-	i2c_config_t i2c_config = {
-		.mode = I2C_MODE_MASTER,
-		.sda_io_num = sda,
+	i2c_master_bus_config_t i2c_mst_config = {
+		.clk_source = I2C_CLK_SRC_DEFAULT,
+		.glitch_ignore_cnt = 7,
+		.i2c_port = I2C_NUM,
 		.scl_io_num = scl,
-		.sda_pullup_en = GPIO_PULLUP_ENABLE,
-		.scl_pullup_en = GPIO_PULLUP_ENABLE,
-		.master.clk_speed = I2C_FREQ
+		.sda_io_num = sda,
+		.flags.enable_internal_pullup = true,
 	};
-	ESP_ERROR_CHECK(i2c_param_config(I2C_NUM, &i2c_config));
-	ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM, I2C_MODE_MASTER, 0, 0, 0));
+	i2c_master_bus_handle_t i2c_bus_handle;
+	ESP_ERROR_CHECK(i2c_new_master_bus(&i2c_mst_config, &i2c_bus_handle));
+
+	i2c_device_config_t dev_cfg = {
+		.dev_addr_length = I2C_ADDR_BIT_LEN_7,
+		.device_address = dev->address_i2c,
+		.scl_speed_hz = I2C_FREQ,
+	};
+	i2c_master_dev_handle_t i2c_dev_handle;
+	ESP_ERROR_CHECK(i2c_master_bus_add_device(i2c_bus_handle, &dev_cfg, &i2c_dev_handle));
+	dev->i2c_dev_handle = i2c_dev_handle;
 }
 
 void SC16IS750_spi(SC16IS750_t * dev, int16_t mosi, int16_t miso, int16_t sclk)
 {
-	esp_err_t ret;
 	spi_bus_config_t spi_bus_config = {
 		.mosi_io_num = mosi,
 		.miso_io_num = miso,
@@ -88,9 +98,7 @@ void SC16IS750_spi(SC16IS750_t * dev, int16_t mosi, int16_t miso, int16_t sclk)
 		.quadhd_io_num = -1
 	};
 
-	ret = spi_bus_initialize( HOST_ID, &spi_bus_config, SPI_DMA_CH_AUTO );
-	ESP_LOGD(TAG, "spi_bus_initialize=%d",ret);
-	assert(ret==ESP_OK);
+	ESP_ERROR_CHECK(spi_bus_initialize( HOST_ID, &spi_bus_config, SPI_DMA_CH_AUTO ));
 
 	spi_device_interface_config_t devcfg={
 		.clock_speed_hz = SPI_FREQ,
@@ -102,11 +110,9 @@ void SC16IS750_spi(SC16IS750_t * dev, int16_t mosi, int16_t miso, int16_t sclk)
 		.queue_size = 7 
 	};
 
-	spi_device_handle_t handle;
-	ret = spi_bus_add_device( HOST_ID, &devcfg, &handle);
-	ESP_LOGD(TAG, "spi_bus_add_device=%d",ret);
-	assert(ret==ESP_OK);
-	dev->handle = handle;
+	spi_device_handle_t spi_device_handle;
+	ESP_ERROR_CHECK(spi_bus_add_device( HOST_ID, &devcfg, &spi_device_handle));
+	dev->spi_device_handle = spi_device_handle;
 }
 
 void SC16IS750_begin(SC16IS750_t * dev, uint32_t baud_A, uint32_t baud_B, long crystal_freq)
@@ -168,33 +174,19 @@ uint8_t SC16IS750_ReadRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_a
 {
 	uint8_t result = 0;
 	//printf("ReadRegister channel=%d reg_addr=%x\n",channel, (reg_addr<<3 | channel<<1));
-	if ( dev->protocol == SC16IS750_PROTOCOL_I2C ) {	// register read operation via I2C
-		uint8_t ic2_data[2];
-		memset (ic2_data, 0, 2);
-
-		i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-		i2c_master_start(cmd);
-		i2c_master_write_byte(cmd, (dev->address_i2c << 1) | I2C_MASTER_WRITE, true);
-		i2c_master_write_byte(cmd, (reg_addr<<3 | channel<<1), true);
-
-		i2c_master_start(cmd);
-		i2c_master_write_byte(cmd, (dev->address_i2c << 1) | I2C_MASTER_READ, true);
-		i2c_master_read(cmd, ic2_data, 1, I2C_MASTER_NACK);
-
-		i2c_master_stop(cmd);
-		esp_err_t espRc = i2c_master_cmd_begin(I2C_NUM, cmd, 100/portTICK_PERIOD_MS);
+	if ( dev->protocol == SC16IS750_PROTOCOL_I2C ) { // register read operation via I2C
+		uint8_t out_buf[1];
+		uint8_t in_buf[1];
+		out_buf[0] = (reg_addr<<3 | channel<<1);
+		esp_err_t espRc = i2c_master_transmit_receive(dev->i2c_dev_handle, out_buf, 1, in_buf, 1, I2C_TICKS_TO_WAIT);
 		if (espRc == ESP_OK) {
-			result = ic2_data[0];
+			result = in_buf[0];
 			ESP_LOGD(TAG, "ReadRegister reg_addr=0x%02x successfully result=0x%02x", reg_addr, result);
 		} else {
 			ESP_LOGE(TAG, "ReadRegister reg_addr=0x%02x failed. code: 0x%02x", reg_addr, espRc);
 			ESP_LOGE(TAG, "ReadRegister %s", esp_err_to_name(espRc));
 		}
-		i2c_cmd_link_delete(cmd);
-#if 0
-		result = wiringPiI2CReadReg8(dev->i2c_fd, (reg_addr<<3 | channel<<1));
-#endif
-	} else if (dev->protocol == SC16IS750_PROTOCOL_SPI) {	//register read operation via SPI
+	} else if (dev->protocol == SC16IS750_PROTOCOL_SPI) { // register read operation via SPI
 		unsigned char spi_data[2];
 		spi_data[0] = 0x80|(reg_addr<<3 | channel<<1);
 		spi_data[1] = 0xff;
@@ -203,7 +195,7 @@ uint8_t SC16IS750_ReadRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_a
 		SPITransaction.length = 2 * 8;
 		SPITransaction.tx_buffer = spi_data;
 		SPITransaction.rx_buffer = spi_data;
-		esp_err_t espRc = spi_device_transmit( dev->handle, &SPITransaction );
+		esp_err_t espRc = spi_device_transmit( dev->spi_device_handle, &SPITransaction );
 		if (espRc == ESP_OK) {
 			result = spi_data[1];
 			ESP_LOGD(TAG, "ReadRegister reg_addr=0x%02x successfully result=0x%02x", reg_addr, result);
@@ -211,18 +203,6 @@ uint8_t SC16IS750_ReadRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_a
 			ESP_LOGE(TAG, "ReadRegister reg_addr=0x%02x failed. code: 0x%02x", reg_addr, espRc);
 			ESP_LOGE(TAG, "ReadRegister %s", esp_err_to_name(espRc));
 		}
-#if 0
-		digitalWrite(dev->device_address_sspin, LOW);
-		delayMicroseconds(10);
-		unsigned char spi_data[2];
-		spi_data[0] = 0x80|(reg_addr<<3 | channel<<1);
-		spi_data[1] = 0xff;
-		//printf("spi_data[in]=0x%x 0x%x\n",spi_data[0],spi_data[1]);
-		wiringPiSPIDataRW(dev->spi_channel, spi_data, 2);
-		delayMicroseconds(10);
-		digitalWrite(dev->device_address_sspin, HIGH);
-		result = spi_data[1];
-#endif
 	}
 	return result;
 
@@ -231,25 +211,18 @@ uint8_t SC16IS750_ReadRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_a
 void SC16IS750_WriteRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_addr, uint8_t val)
 {
 	//printf("WriteRegister channel=%d reg_addr=%x val=%x\n",channel, (reg_addr<<3 | channel<<1), val);
-	if ( dev->protocol == SC16IS750_PROTOCOL_I2C ) {	// register read operation via I2C
-		i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-		i2c_master_start(cmd);
-		i2c_master_write_byte(cmd, (dev->address_i2c << 1) | I2C_MASTER_WRITE, true);
-		i2c_master_write_byte(cmd, (reg_addr<<3 | channel<<1), true);
-		i2c_master_write_byte(cmd, val, true);
-		i2c_master_stop(cmd);
-		esp_err_t espRc = i2c_master_cmd_begin(I2C_NUM, cmd, 100/portTICK_PERIOD_MS);
+	if ( dev->protocol == SC16IS750_PROTOCOL_I2C ) { // register write operation via I2C
+		uint8_t out_buf[2];
+		out_buf[0] = (reg_addr<<3 | channel<<1);
+		out_buf[1] = val;
+		esp_err_t espRc = i2c_master_transmit(dev->i2c_dev_handle, out_buf, 2, I2C_TICKS_TO_WAIT);
 		if (espRc == ESP_OK) {
 			ESP_LOGD(TAG, "WriteRegister reg_addr=0x%02x val=0x%02x successfully", reg_addr, val);
 		} else {
 			ESP_LOGE(TAG, "WriteRegister reg_addr=0x%02x val=0x%02x failed. code: 0x%02x", reg_addr, val, espRc);
 			ESP_LOGE(TAG, "WriteRegister %s", esp_err_to_name(espRc));
 		}
-		i2c_cmd_link_delete(cmd);
-#if 0
-		wiringPiI2CWriteReg8(dev->i2c_fd, (reg_addr<<3 | channel<<1), val);
-#endif
-	} else {
+	} else if (dev->protocol == SC16IS750_PROTOCOL_SPI) { // register write operation via SPI
 		unsigned char spi_data[2];
 		spi_data[0] = (reg_addr<<3 | channel<<1);
 		spi_data[1] = val;
@@ -257,23 +230,13 @@ void SC16IS750_WriteRegister(SC16IS750_t * dev, uint8_t channel, uint8_t reg_add
 		memset( &SPITransaction, 0, sizeof( spi_transaction_t ) );
 		SPITransaction.length = 2 * 8;
 		SPITransaction.tx_buffer = spi_data;
-		esp_err_t espRc = spi_device_transmit( dev->handle, &SPITransaction );
+		esp_err_t espRc = spi_device_transmit( dev->spi_device_handle, &SPITransaction );
 		if (espRc == ESP_OK) {
 			ESP_LOGD(TAG, "WriteRegister reg_addr=0x%02x val=0x%02x successfully", reg_addr, val);
 		} else {
 			ESP_LOGE(TAG, "WriteRegister reg_addr=0x%02x val=0x%02x failed. code: 0x%02x", reg_addr, val, espRc);
 			ESP_LOGE(TAG, "WriteRegister %s", esp_err_to_name(espRc));
 		}
-#if 0
-		digitalWrite(dev->device_address_sspin, LOW);
-		delayMicroseconds(10);
-		unsigned char spi_data[2];
-		spi_data[0] = (reg_addr<<3 | channel<<1);
-		spi_data[1] = val;
-		wiringPiSPIDataRW(dev->spi_channel, spi_data, 2);
-		delayMicroseconds(10);
-		digitalWrite(dev->device_address_sspin, HIGH);
-#endif
 	}
 	return;
 }

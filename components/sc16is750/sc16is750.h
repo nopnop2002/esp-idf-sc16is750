@@ -2,6 +2,7 @@
 #define MAIN_SC16IS750_H_
 
 //#include <stdint.h>
+#include "driver/i2c_master.h"
 #include "driver/spi_master.h"
 
 //Device Address
@@ -134,7 +135,8 @@ typedef struct {
   long crystal_freq;
   uint32_t timeout;
   int channels;
-  spi_device_handle_t handle;
+  spi_device_handle_t spi_device_handle;
+  i2c_master_dev_handle_t i2c_dev_handle;
 } SC16IS750_t;
 
   void    SC16IS750_init(SC16IS750_t * dev, uint8_t prtcl, uint8_t addr, int channels);
