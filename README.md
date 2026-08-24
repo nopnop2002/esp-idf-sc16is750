@@ -96,7 +96,6 @@ ESP-IDF V4.4 release branch reached EOL in July 2024.
 ```
 git clone https://github.com/nopnop2002/esp-idf-sc16is750
 cd esp-idf-sc16is750/selftest
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
@@ -121,7 +120,7 @@ If you use this module at the same time as another I2C device using I2C port 0, 
 
 ## Wireing for i2c
 
-|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-Cx/Hx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|5V|5V|5V|(*1)|
 |GND|--|GND|GND|GND||
@@ -169,7 +168,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 
 ## Wireing for SPI
 
-|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|SC16IS750/752||ESP32|ESP32-S2/S3|ESP32-Cx/Hx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|5V|5V|5V|(*1)|
 |GND|--|GND|GND|GND||
