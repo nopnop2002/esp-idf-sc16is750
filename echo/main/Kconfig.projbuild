@@ -23,14 +23,14 @@ menu "Application Configuration"
 
 	config AUTO_RS1
 		bool "Enable Auto RS-485 RTS control for channel 1"
-		default false
+		default n
 		help
 			Enable Auto RS-485 RTS control for channel 1.
 
 	config INVERT_RS1
 		depends on AUTO_RS1
 		bool "Enable RS-485 RTS output inversion for channel 1"
-		default false
+		default n
 		help
 			RS-485 RTS output inversion for channel 1.
 
@@ -44,14 +44,14 @@ menu "Application Configuration"
 	config AUTO_RS2
 		depends on MODEL_SC16IS752
 		bool "Enable Auto RS-485 RTS control for channel 2"
-		default false
+		default n
 		help
 			Enable Auto RS-485 RTS control for channel 1.
 
 	config INVERT_RS2
 		depends on AUTO_RS2
 		bool "Enable RS-485 RTS output inversion for channel 2"
-		default false
+		default n
 		help
 			RS-485 RTS output inversion for channel 2.
 
